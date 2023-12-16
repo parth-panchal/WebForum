@@ -10,6 +10,7 @@ from .serializers import PostSerializer, CustomUserSerializer, UserSerializer
 from rest_framework.decorators import api_view
 
 # Create your views here.
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomUserView(APIView):
     parser_classes = [JSONParser]
 
