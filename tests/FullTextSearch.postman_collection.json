@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "cde67879-e649-41a6-b01c-bc3be4b623f9",
+		"name": "FullTextSearch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31711417"
+	},
+	"item": [
+		{
+			"name": "add post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"fulltext_id\", jsonData.id);\r",
+							"pm.environment.set(\"timestamp\", jsonData.timestamp);\r",
+							"pm.environment.set(\"key\", jsonData.key);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"msg\": \"this is a test post. i want to try a post in the sqlite database {{full_text_query}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/post",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fulltext search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"post 2 contents correct\", function () {\r",
+							"    query = pm.environment.get(\"full_text_query\");\r",
+							"    var search_res = jsonData[0].msg.search(query);\r",
+							"    pm.expect(search_res).to.not.eql(-1);\r",
+							"});\r",
+							"pm.environment.set(\"full_text_query\", pm.environment.get(\"full_text_query\") + 2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/post/search?query={{full_text_query}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"post",
+						"search"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "{{full_text_query}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
