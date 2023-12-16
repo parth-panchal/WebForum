@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from onlineforum.views import PostView, FullTextSearch, CustomUserView, PostUserView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', admin.site.urls),
+
+    path('post/user',PostUserView.as_view(),name='post_user'), #GET all posts of a user
+    path('post/<int:id>/delete/<str:key>', PostView.as_view(), name='post_delete'),  # for DELETE
+    path('post/<int:id>', PostView.as_view(), name='post_list_create'),# For GET
+    path('post', PostView.as_view(), name='post_list_create'),  # POST
+
+    path('post/search', FullTextSearch.as_view(), name='post_search'),
+
+    path('user', CustomUserView.as_view(), name='user'),
 ]
