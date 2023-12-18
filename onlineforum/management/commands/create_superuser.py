@@ -18,16 +18,16 @@ class Command(BaseCommand):
 
         try:
             User.objects.create_superuser(
-                username='harvish',
-                password='abcd',
+                username='admin',
+                password='admin',
                 )
             
             self.stdout.write("Superuser created successfully")
 
             CustomUser.objects.create(
-                username='harvish',
-                first_name='Harvish',
-                last_name='Jariwala',
+                username='nancyradadia',
+                first_name='Nancy',
+                last_name='Radadia',
                 )
         except Exception as e:
             raise CommandError(e)

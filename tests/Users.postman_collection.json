@@ -68,6 +68,34 @@
 			"response": []
 		},
 		{
+			"name": "get details of user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/user?username=harvish",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "harvish"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "create post based on user",
 			"event": [
 				{
